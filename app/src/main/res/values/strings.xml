@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Zdalna choinka</string>
+    <string name="SEARCHING_DEVICES">Wyszukiwanie urządzeń.</string>
+    <string name="NO_INTERNET_CONNECTION">Brak połączenia z Internetem.</string>
+    <string name="FOUND_DEVICES">Znalezione urządzenia (%1d)</string>
+    <string name="UPDATE">Szukaj</string>
+    <string name="CLOSE">Zamknij</string>
+</resources>
