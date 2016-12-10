@@ -1,9 +1,9 @@
 package pl.shajen.octopus.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,16 +21,17 @@ import pl.shajen.octopus.R;
 import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.tasks.ScanTask;
 
-public class SearchDevicesActivity extends AppCompatActivity implements ScanTask.ScanTaskResponse {
-    private static final String PREFS_NAME = "OCTOPUS";
-    private static final String DEVICES_KEY = "DEVICES";
+import static pl.shajen.octopus.constants.SettingsConstant.DEVICES_PREFS_KEY;
+import static pl.shajen.octopus.constants.SettingsConstant.DEVICE_ACTIVITY_KEY;
+import static pl.shajen.octopus.constants.SettingsConstant.PREFS_NAME;
 
+public class SearchDevicesActivity extends AppCompatActivity implements ScanTask.ScanTaskResponse {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_devices);
 
-        final Set<String> devices = getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_KEY, new HashSet<String>());
+        final Set<String> devices = getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_PREFS_KEY, new HashSet<String>());
         setDevices(devices);
     }
 
@@ -53,7 +54,7 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
                 }
                 return true;
             case R.id.close:
-                finish();
+                finishAffinity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -71,7 +72,11 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
-                Log.e("Clicked", item);
+                Intent in = new Intent(getApplicationContext(),DeviceActivity.class);
+                Bundle b = new Bundle();
+                b.putString(DEVICE_ACTIVITY_KEY, item);
+                in.putExtras(b);
+                startActivity(in);
             }
         });
     }
@@ -79,7 +84,7 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
     @Override
     public void processFinish(Set<String> devices) {
         final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
-        editor.putStringSet(DEVICES_KEY, devices);
+        editor.putStringSet(DEVICES_PREFS_KEY, devices);
         editor.commit();
         setDevices(devices);
     }
