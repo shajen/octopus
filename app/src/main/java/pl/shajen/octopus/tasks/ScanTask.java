@@ -78,14 +78,12 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<String>> {
 
     private Set<String> getActiveDevices(final int progressStart, List<String> list) {
         Set<String> devices = new HashSet<>();
-        if (m_networkTools.isInternet()) {
-            int i = 1;
-            for (final String deviceIp : list) {
-                if (m_networkTools.isReachable(deviceIp, PORT, TIMEOUT_CONNECT_MS)) {
-                    devices.add(deviceIp);
-                }
-                publishProgress(progressStart + i++);
+        int i = 1;
+        for (final String deviceIp : list) {
+            if (m_networkTools.isReachable(deviceIp, PORT, TIMEOUT_CONNECT_MS)) {
+                devices.add(deviceIp);
             }
+            publishProgress(progressStart + i++);
         }
         return devices;
     }
