@@ -14,7 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import pl.shajen.octopus.R;
@@ -65,7 +68,10 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         final TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(getString(R.string.FOUND_DEVICES, devices.size()));
         final ListView listview = (ListView) findViewById(R.id.listView);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, devices.toArray(new String[0]));
+        List<String> list = new ArrayList<>();
+        list.addAll(devices);
+        Collections.sort(list);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

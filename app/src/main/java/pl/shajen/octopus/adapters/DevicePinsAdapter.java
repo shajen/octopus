@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pl.shajen.octopus.R;
 import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.tasks.DeviceRequestTask;
+
+import static pl.shajen.octopus.constants.SettingsConstant.SWITCH_COUNT;
 
 public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
     private final Context m_context;
@@ -59,6 +63,15 @@ public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
             }
         });
 
+        onButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("ON LONG", String.format("%d", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=20", pin, SWITCH_COUNT));
+                return true;
+            }
+        });
+
         offButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +80,24 @@ public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
             }
         });
 
+        offButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("OFF LONG", String.format("%d", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=100", pin, SWITCH_COUNT));
+                return true;
+            }
+        });
+
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("IMAGE LONG", String.format("%d", pin));
+                List<String> list = new ArrayList<>(Collections.nCopies(SWITCH_COUNT, String.format("GPIO?PIN=%d&MODE=SWITCH", pin)));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(list.toArray(new String[list.size()]));
+                return true;
+            }
+        });
         return rowView;
     }
 }

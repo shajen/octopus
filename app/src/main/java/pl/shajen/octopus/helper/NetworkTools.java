@@ -10,6 +10,8 @@ import android.support.test.espresso.core.deps.guava.io.CharStreams;
 import android.text.format.Formatter;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -54,7 +56,7 @@ public class NetworkTools {
 
     public boolean isReachable(String addr, int openPort, int timeOutMillis) {
         try {
-            if (!InetAddress.getByName(addr).isReachable(TIMEOUT_PING_MS)) {
+            if (isLocalIp(addr) && !InetAddress.getByName(addr).isReachable(TIMEOUT_PING_MS)) {
                 return false;
             }
             new Socket().connect(new InetSocketAddress(addr, openPort), timeOutMillis);
@@ -81,6 +83,16 @@ public class NetworkTools {
         } catch (Exception ex) {
             Log.e("Ex", ex.toString());
             return "";
+        }
+    }
+
+    public JSONObject getJsonResponse(String stringUrl) {
+        try {
+            final URL url = new URL(stringUrl);
+            final String response = CharStreams.toString(new InputStreamReader(url.openStream(), Charsets.UTF_8));
+            return new JSONObject(response);
+        } catch (Exception ex) {
+            return null;
         }
     }
 
