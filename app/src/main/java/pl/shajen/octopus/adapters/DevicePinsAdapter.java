@@ -59,45 +59,45 @@ public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
             @Override
             public void onClick(View v) {
                 Log.e("ON", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=ON", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO/SET?PIN=%d&MODE=ON", pin));
             }
         });
 
-        onButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("ON LONG", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=20", pin, SWITCH_COUNT));
-                return true;
-            }
-        });
+//        onButton.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Log.e("ON LONG", String.format("%d", pin));
+//                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=20", pin, SWITCH_COUNT));
+//                return true;
+//            }
+//        });
 
         offButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("OFF", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=OFF", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO/SET?PIN=%d&MODE=OFF", pin));
             }
         });
 
-        offButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("OFF LONG", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=100", pin, SWITCH_COUNT));
-                return true;
-            }
-        });
+//        offButton.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Log.e("OFF LONG", String.format("%d", pin));
+//                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO?PIN=%d&MODE=SWITCH&COUNT=%d&SLEEP=100", pin, SWITCH_COUNT));
+//                return true;
+//            }
+//        });
 
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("IMAGE LONG", String.format("%d", pin));
-                List<String> list = new ArrayList<>(Collections.nCopies(SWITCH_COUNT, String.format("GPIO?PIN=%d&MODE=SWITCH", pin)));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(list.toArray(new String[list.size()]));
-                return true;
-            }
-        });
+//        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Log.e("IMAGE LONG", String.format("%d", pin));
+//                List<String> list = new ArrayList<>(Collections.nCopies(SWITCH_COUNT, String.format("GPIO?PIN=%d&MODE=SWITCH", pin)));
+//                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(list.toArray(new String[list.size()]));
+//                return true;
+//            }
+//        });
         return rowView;
     }
 }

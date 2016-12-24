@@ -36,7 +36,7 @@ public class DeviceActivity extends AppCompatActivity implements DeviceRequestTa
         Bundle b = getIntent().getExtras();
         if (b != null) {
             final String deviceIp = b.getString(DEVICE_ACTIVITY_KEY);
-            new DeviceRequestTask(this, this, new NetworkTools(this), deviceIp).execute("status");
+            new DeviceRequestTask(this, this, new NetworkTools(this), deviceIp).execute("GPIO/");
         }
     }
 
