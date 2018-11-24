@@ -55,12 +55,11 @@
         android:layout_height="wrap_content"
         android:text="@string/SPEED_LABEL" />
 
-    <EditText
-        android:id="@+id/speedEditText"
-        android:layout_width="match_parent"
+    <NumberPicker
+        android:id="@+id/speedNumberPicker"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberSigned" />
+         />
 
     <TextView
         android:id="@+id/textView5"
@@ -68,11 +67,9 @@
         android:layout_height="wrap_content"
         android:text="@string/ANIMATIONS_LABEL" />
 
-    <EditText
-        android:id="@+id/animatiosEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="numberSigned" />
+      <NumberPicker
+          android:id="@+id/animationsNumberPicker"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
 
 </LinearLayout>

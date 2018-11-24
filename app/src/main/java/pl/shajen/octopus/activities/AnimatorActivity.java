@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,6 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         Bundle b = getIntent().getExtras();
         if (b != null) {
             final Device device = new Device(b.getString(DEVICE_ACTIVITY_KEY));
-            new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute("/ANIMATOR/");
 
             final TextView deviceTeypeTextView = (TextView) findViewById(R.id.deviceTeypeTextView);
             deviceTeypeTextView.setText(device.toString());
@@ -42,7 +42,7 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
             offButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendTask(device.ip(), "/ANIMATOR/SET?KEY=POWERED_ON&VALUE=0");
+                    sendTask(device.ip(), "POWERED_ON", "0");
                 }
             });
 
@@ -50,9 +50,31 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
             onButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendTask(device.ip(), "/ANIMATOR/SET?KEY=POWERED_ON&VALUE=1");
+                    sendTask(device.ip(), "POWERED_ON", "1");
                 }
             });
+
+            final NumberPicker speedNumberPicker = (NumberPicker) findViewById(R.id.speedNumberPicker);
+            speedNumberPicker.setMinValue(1);
+            speedNumberPicker.setMaxValue(100);
+            speedNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    sendTask(device.ip(), "SPEED", Integer.toString(newVal));
+                }
+            });
+
+            final NumberPicker animationsNumberPicker = (NumberPicker) findViewById(R.id.animationsNumberPicker);
+            animationsNumberPicker.setMinValue(0);
+            animationsNumberPicker.setMaxValue(3);
+            animationsNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    sendTask(device.ip(), "ANIMATION", Integer.toString(newVal - 1));
+                }
+            });
+
+            new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute("/ANIMATOR/");
         }
     }
 
@@ -74,8 +96,9 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         }
     }
 
-    private void sendTask(String deviceIp, String resource) {
-        new DeviceRequestTask(this, this, new NetworkTools(this), deviceIp, true).execute(resource);
+    private void sendTask(String deviceIp, String key, String value) {
+        final String url = String.format("/ANIMATOR/SET?KEY=%s&VALUE=%s", key, value);
+        new DeviceRequestTask(this, this, new NetworkTools(this), deviceIp, true).execute(url);
     }
 
     @Override
@@ -93,11 +116,17 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         }
     }
 
+    private void updateEditText(EditText editText, String value) {
+        if (!editText.getText().toString().equals(value)) {
+            editText.setText(value);
+        }
+    }
+
     private void processData(JSONObject data) {
         try {
             final ImageView stateIcon = (ImageView) findViewById(R.id.animatorIconPoweredOn);
-            final EditText speedEditText = (EditText) findViewById(R.id.speedEditText);
-            final EditText animatiosEditText = (EditText) findViewById(R.id.animatiosEditText);
+            final NumberPicker speedNumberPicker = (NumberPicker) findViewById(R.id.speedNumberPicker);
+            final NumberPicker animationsNumberPicker = (NumberPicker) findViewById(R.id.animationsNumberPicker);
 
             if (data.getString("powered_on").equals("1")) {
                 stateIcon.setImageResource(android.R.drawable.btn_star_big_on);
@@ -105,8 +134,8 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
                 stateIcon.setImageResource(android.R.drawable.btn_star_big_off);
             }
 
-            speedEditText.setText(data.getString("speed"));
-            animatiosEditText.setText(data.getString("animation"));
+            speedNumberPicker.setValue(Integer.parseInt(data.getString("speed")));
+            animationsNumberPicker.setValue(Integer.parseInt(data.getString("animation")) + 1);
         } catch (Exception ex) {
         }
     }
