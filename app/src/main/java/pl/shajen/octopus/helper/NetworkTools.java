@@ -16,14 +16,16 @@ import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 
+import pl.shajen.octopus.constants.NetworkConstant;
+
 import static pl.shajen.octopus.constants.NetworkConstant.PORT;
-import static pl.shajen.octopus.constants.NetworkConstant.PUBLIC_IP_SERVER;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_COMMAND_MS;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_CONNECT_MS;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_PING_MS;
@@ -59,8 +61,15 @@ public class NetworkTools {
             if (isLocalIp(addr) && !InetAddress.getByName(addr).isReachable(TIMEOUT_PING_MS)) {
                 return false;
             }
-            new Socket().connect(new InetSocketAddress(addr, openPort), timeOutMillis);
-            return true;
+            final Socket socket = new Socket();
+            socket.connect(new InetSocketAddress(addr, openPort), timeOutMillis);
+            final OutputStream o = socket.getOutputStream();
+            final InputStream i = socket.getInputStream();
+            final boolean result = socket.isConnected();
+            o.close();
+            i.close();
+            socket.close();
+            return result;
         } catch (Exception ex) {
             return false;
         }
@@ -86,10 +95,17 @@ public class NetworkTools {
         }
     }
 
+    public JSONObject getJsonResponse(String ip, String url, int port) {
+        return getJsonResponse("http://" + ip + ":" + port + url);
+    }
+
     public JSONObject getJsonResponse(String stringUrl) {
         try {
             final URL url = new URL(stringUrl);
-            final String response = CharStreams.toString(new InputStreamReader(url.openStream(), Charsets.UTF_8));
+            final URLConnection urlConnection = url.openConnection();
+            urlConnection.setConnectTimeout(NetworkConstant.TIMEOUT_CONNECT_MS);
+            urlConnection.setReadTimeout(NetworkConstant.TIMEOUT_COMMAND_MS);
+            final String response = CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(), Charsets.UTF_8));
             return new JSONObject(response);
         } catch (Exception ex) {
             return null;
@@ -103,17 +119,4 @@ public class NetworkTools {
     public boolean isIpInsideNetwork(String ip) {
         return (isLocalIp(ip) && isWifi()) || (!isLocalIp(ip) && isInternet());
     }
-
-    public String getPublicIP() {
-        try {
-            URL url = new URL(PUBLIC_IP_SERVER);
-            URLConnection con = url.openConnection();
-            final String result = CharStreams.toString(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
-            return result.trim();
-        } catch (Exception ex) {
-            Log.e("Ex", ex.toString());
-            return "";
-        }
-    }
-
 }

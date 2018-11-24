@@ -11,15 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import pl.shajen.octopus.R;
 import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.tasks.DeviceRequestTask;
-
-import static pl.shajen.octopus.constants.SettingsConstant.SWITCH_COUNT;
 
 public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
     private final Context m_context;

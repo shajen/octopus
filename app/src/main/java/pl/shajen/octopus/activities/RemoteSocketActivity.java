@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import pl.shajen.octopus.R;
-import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.adapters.DevicePinsAdapter;
+import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.tasks.DeviceRequestTask;
 
 import static pl.shajen.octopus.constants.SettingsConstant.DEVICE_ACTIVITY_KEY;

@@ -2,8 +2,8 @@ package pl.shajen.octopus.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +22,7 @@ import java.util.Set;
 
 import pl.shajen.octopus.R;
 import pl.shajen.octopus.helper.NetworkTools;
+import pl.shajen.octopus.models.Device;
 import pl.shajen.octopus.tasks.ScanTask;
 
 import static pl.shajen.octopus.constants.SettingsConstant.DEVICES_PREFS_KEY;
@@ -34,7 +35,10 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_devices);
 
-        final Set<String> devices = getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_PREFS_KEY, new HashSet<String>());
+        Set<Device> devices = new HashSet<>();
+        for (String packedDevice : getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_PREFS_KEY, new HashSet<String>())) {
+            devices.add(new Device(packedDevice));
+        }
         setDevices(devices);
     }
 
@@ -64,23 +68,27 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         }
     }
 
-    private void setDevices(Set<String> devices) {
+    private void setDevices(Set<Device> devices) {
         final TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(getString(R.string.FOUND_DEVICES, devices.size()));
         final ListView listview = (ListView) findViewById(R.id.listView);
-        List<String> list = new ArrayList<>();
+        List<Device> list = new ArrayList<>();
         list.addAll(devices);
         Collections.sort(list);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        List<String> ipList = new ArrayList<>();
+        for (Device device : list) {
+            ipList.add(device.toString());
+        }
+        final ArrayAdapter<Device> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                Intent in = new Intent(getApplicationContext(),RemoteSocketActivity.class);
+                final Device item = (Device) parent.getItemAtPosition(position);
+                Intent in = new Intent(getApplicationContext(), RemoteSocketActivity.class);
                 Bundle b = new Bundle();
-                b.putString(DEVICE_ACTIVITY_KEY, item);
+                b.putString(DEVICE_ACTIVITY_KEY, item.ip());
                 in.putExtras(b);
                 startActivity(in);
             }
@@ -88,9 +96,13 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
     }
 
     @Override
-    public void processFinish(Set<String> devices) {
+    public void processFinish(Set<Device> devices) {
+        Set<String> packedDevices = new HashSet<>();
+        for (Device device : devices) {
+            packedDevices.add(device.toPackedString());
+        }
         final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
-        editor.putStringSet(DEVICES_PREFS_KEY, devices);
+        editor.putStringSet(DEVICES_PREFS_KEY, packedDevices);
         editor.commit();
         setDevices(devices);
     }

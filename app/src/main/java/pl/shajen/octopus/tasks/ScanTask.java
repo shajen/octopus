@@ -5,31 +5,37 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import pl.shajen.octopus.R;
+import pl.shajen.octopus.constants.NetworkConstant;
 import pl.shajen.octopus.helper.NetworkTools;
+import pl.shajen.octopus.models.Device;
 
 import static pl.shajen.octopus.constants.NetworkConstant.IP_LIST_URL;
 import static pl.shajen.octopus.constants.NetworkConstant.MAX_HOST;
 import static pl.shajen.octopus.constants.NetworkConstant.PORT;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_CONNECT_MS;
 
-public class ScanTask extends AsyncTask<Void, Integer, Set<String>> {
+public class ScanTask extends AsyncTask<Void, Integer, Set<Device>> {
+    private final Context m_context;
     private final ScanTaskResponse m_response;
     private final NetworkTools m_networkTools;
     private final ProgressDialog m_progressDialog;
 
     public interface ScanTaskResponse {
-        void processFinish(Set<String> devices);
+        void processFinish(Set<Device> devices);
     }
 
     public ScanTask(Context context, ScanTaskResponse response, NetworkTools networkTools) {
+        m_context = context;
         m_response = response;
         m_networkTools = networkTools;
         m_progressDialog = new ProgressDialog(context);
@@ -47,12 +53,12 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<String>> {
     }
 
     @Override
-    protected Set<String> doInBackground(Void... voids) {
-        return getActiveDevices();
+    protected Set<Device> doInBackground(Void... voids) {
+        return getControllerDevices();
     }
 
     @Override
-    protected void onPostExecute(Set<String> result) {
+    protected void onPostExecute(Set<Device> result) {
         super.onPostExecute(result);
         m_progressDialog.dismiss();
         m_response.processFinish(result);
@@ -64,8 +70,31 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<String>> {
         m_progressDialog.setProgress(values[0]);
     }
 
-    private Set<String> getActiveDevices() {
-        Set<String> devices = new HashSet<>();
+    private Set<Device> getControllerDevices() {
+        List<String> list = getActiveDevices();
+        Set<Device> controllerDevices = new HashSet<>();
+        m_progressDialog.setMax(list.size());
+        m_progressDialog.setProgress(0);
+        int i = 0;
+        for (final String deviceIp : list) {
+            m_progressDialog.setMessage(m_context.getString(R.string.SCANNING_IP, deviceIp));
+            final JSONObject json = m_networkTools.getJsonResponse(deviceIp, "/", NetworkConstant.PORT);
+            if (json != null) {
+                try {
+                    controllerDevices.add(new Device(deviceIp, json.getString("device_type")));
+                } catch (JSONException e) {
+                    controllerDevices.add(new Device(deviceIp, "micropython"));
+                }
+            } else {
+                controllerDevices.add(new Device(deviceIp, "unknown"));
+            }
+            publishProgress(++i);
+        }
+        return controllerDevices;
+    }
+
+    private List<String> getActiveDevices() {
+        List<String> devices = new LinkedList<>();
         final List<String> devicesInternet = getDevicesInternet();
         final List<String> devicesWifi = getDevicesWifi();
         final int maxHostInternet = devicesInternet.size();
@@ -76,8 +105,8 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<String>> {
         return devices;
     }
 
-    private Set<String> getActiveDevices(final int progressStart, List<String> list) {
-        Set<String> devices = new HashSet<>();
+    private List<String> getActiveDevices(final int progressStart, List<String> list) {
+        List<String> devices = new LinkedList<>();
         int i = 1;
         for (final String deviceIp : list) {
             if (m_networkTools.isReachable(deviceIp, PORT, TIMEOUT_CONNECT_MS)) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Octopus</string>
-    <string name="SEARCHING_DEVICES">Searching devices...</string>
+    <string name="SEARCHING_DEVICES">Searching devices ...</string>
     <string name="NO_INTERNET_CONNECTION">No internet connection.</string>
     <string name="FOUND_DEVICES">Found devices (%1d)</string>
     <string name="TASK_ERROR">Error during connection.</string>
@@ -11,6 +11,7 @@
     <string name="PIN_LABEL">Relay #%d</string>
     <string name="ON">On</string>
     <string name="OFF">Off</string>
-    <string name="PLEASE_WAIT">Please wait...</string>
+    <string name="PLEASE_WAIT">Please wait ...</string>
     <string name="TASK">Submit a task.</string>
+    <string name="SCANNING_IP">Scanning %1s ...</string>
 </resources>
