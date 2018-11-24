@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Ośmiornica</string>
+    <string name="SEARCHING_DEVICES">Wyszukiwanie urządzeń...</string>
+    <string name="NO_INTERNET_CONNECTION">Brak połączenia z Internetem.</string>
+    <string name="FOUND_DEVICES">Znalezione urządzenia (%1d)</string>
+    <string name="TASK_ERROR">Błąd podczas połączenia.</string>
+    <string name="UPDATE">Szukaj</string>
+    <string name="CLOSE">Zamknij</string>
+    <string name="FOUND_PINS">Znalezione przekaźniki (%1d)</string>
+    <string name="PIN_LABEL">Przekaźnik #%d</string>
+    <string name="ON">Włącz</string>
+    <string name="OFF">Wyłącz</string>
+    <string name="TASK">Przesyłanie zadania.</string>
+    <string name="PLEASE_WAIT">Proszę czekać...</string>
+</resources>
