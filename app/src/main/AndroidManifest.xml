@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.DeviceActivity"
+            android:name=".activities.RemoteSocketActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>

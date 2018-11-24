@@ -26,7 +26,7 @@ import pl.shajen.octopus.tasks.DeviceRequestTask;
 
 import static pl.shajen.octopus.constants.SettingsConstant.DEVICE_ACTIVITY_KEY;
 
-public class DeviceActivity extends AppCompatActivity implements DeviceRequestTask.DeviceRequestResponse {
+public class RemoteSocketActivity extends AppCompatActivity implements DeviceRequestTask.DeviceRequestResponse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
