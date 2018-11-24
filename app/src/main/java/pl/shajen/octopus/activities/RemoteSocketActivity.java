@@ -22,6 +22,7 @@ import java.util.List;
 import pl.shajen.octopus.R;
 import pl.shajen.octopus.adapters.DevicePinsAdapter;
 import pl.shajen.octopus.helper.NetworkTools;
+import pl.shajen.octopus.models.Device;
 import pl.shajen.octopus.tasks.DeviceRequestTask;
 
 import static pl.shajen.octopus.constants.SettingsConstant.DEVICE_ACTIVITY_KEY;
@@ -31,12 +32,12 @@ public class RemoteSocketActivity extends AppCompatActivity implements DeviceReq
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device);
+        setContentView(R.layout.activity_remote_socket);
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            final String deviceIp = b.getString(DEVICE_ACTIVITY_KEY);
-            new DeviceRequestTask(this, this, new NetworkTools(this), deviceIp).execute("GPIO/");
+            final Device device = new Device(b.getString(DEVICE_ACTIVITY_KEY));
+            new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), false).execute("GPIO/");
         }
     }
 
@@ -86,9 +87,9 @@ public class RemoteSocketActivity extends AppCompatActivity implements DeviceReq
 
         final Bundle b = getIntent().getExtras();
         if (b != null) {
-            final String deviceIp = b.getString(DEVICE_ACTIVITY_KEY);
+            final Device device = new Device(b.getString(DEVICE_ACTIVITY_KEY));
             final ListView listview = (ListView) findViewById(R.id.devicePinListView);
-            final ArrayAdapter<Pair<Integer, Boolean>> adapter = new DevicePinsAdapter(this, this, list, deviceIp);
+            final ArrayAdapter<Pair<Integer, Boolean>> adapter = new DevicePinsAdapter(this, this, list, device.ip());
             listview.setAdapter(adapter);
         }
     }

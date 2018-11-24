@@ -14,4 +14,8 @@
     <string name="PLEASE_WAIT">Please wait ...</string>
     <string name="TASK">Submit a task.</string>
     <string name="SCANNING_IP">Scanning %1s ...</string>
+    <string name="DEVICE_TYPE_LABEL">Device type:</string>
+    <string name="STATE_LABEL">State:</string>
+    <string name="SPEED_LABEL">Speed:</string>
+    <string name="ANIMATIONS_LABEL">Animations:</string>
 </resources>

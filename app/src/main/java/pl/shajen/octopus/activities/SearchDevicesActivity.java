@@ -86,9 +86,14 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 final Device item = (Device) parent.getItemAtPosition(position);
-                Intent in = new Intent(getApplicationContext(), RemoteSocketActivity.class);
+                final Intent in;
+                if (item.controller().equals("Animator")) {
+                    in = new Intent(getApplicationContext(), AnimatorActivity.class);
+                } else {
+                    in = new Intent(getApplicationContext(), RemoteSocketActivity.class);
+                }
                 Bundle b = new Bundle();
-                b.putString(DEVICE_ACTIVITY_KEY, item.ip());
+                b.putString(DEVICE_ACTIVITY_KEY, item.toPackedString());
                 in.putExtras(b);
                 startActivity(in);
             }

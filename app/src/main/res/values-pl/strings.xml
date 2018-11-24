@@ -13,4 +13,8 @@
     <string name="TASK">Przesyłanie zadania.</string>
     <string name="PLEASE_WAIT">Proszę czekać ...</string>
     <string name="SCANNING_IP">Skanowanie %1s ...</string>
+    <string name="DEVICE_TYPE_LABEL">Typ urządzenia:</string>
+    <string name="STATE_LABEL">Stan:</string>
+    <string name="SPEED_LABEL">Prędkość:</string>
+    <string name="ANIMATIONS_LABEL">Animacja:</string>
 </resources>

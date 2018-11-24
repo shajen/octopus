@@ -8,7 +8,6 @@ import android.net.wifi.WifiManager;
 import android.support.test.espresso.core.deps.guava.base.Charsets;
 import android.support.test.espresso.core.deps.guava.io.CharStreams;
 import android.text.format.Formatter;
-import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -75,7 +74,7 @@ public class NetworkTools {
         }
     }
 
-    public String getResponse(String ip, String url) {
+    public String getRawSocketResponse(String ip, String url) {
         try {
             Socket socket = new Socket();
             socket.setSoTimeout(TIMEOUT_COMMAND_MS);
@@ -90,23 +89,33 @@ public class NetworkTools {
             socket.close();
             return result;
         } catch (Exception ex) {
-            Log.e("Ex", ex.toString());
             return "";
         }
     }
 
-    public JSONObject getJsonResponse(String ip, String url, int port) {
-        return getJsonResponse("http://" + ip + ":" + port + url);
+    public JSONObject getJsonResponse(String ip, String resource, int port) {
+        return getJsonResponse("http://" + ip + ":" + port + resource);
     }
 
     public JSONObject getJsonResponse(String stringUrl) {
+        try {
+            return new JSONObject(getStringResponse(stringUrl));
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public String getStringResponse(String ip, String resource, int port) {
+        return getStringResponse("http://" + ip + ":" + port + resource);
+    }
+
+    public String getStringResponse(String stringUrl) {
         try {
             final URL url = new URL(stringUrl);
             final URLConnection urlConnection = url.openConnection();
             urlConnection.setConnectTimeout(NetworkConstant.TIMEOUT_CONNECT_MS);
             urlConnection.setReadTimeout(NetworkConstant.TIMEOUT_COMMAND_MS);
-            final String response = CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(), Charsets.UTF_8));
-            return new JSONObject(response);
+            return CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(), Charsets.UTF_8));
         } catch (Exception ex) {
             return null;
         }
