@@ -12,10 +12,17 @@
     <string name="ON">On</string>
     <string name="OFF">Off</string>
     <string name="PLEASE_WAIT">Please wait ...</string>
-    <string name="TASK">Submit a task.</string>
+    <string name="TASK">Submitting</string>
     <string name="SCANNING_IP">Scanning %1s ...</string>
     <string name="DEVICE_TYPE_LABEL">Device type:</string>
     <string name="STATE_LABEL">State:</string>
     <string name="SPEED_LABEL">Speed:</string>
-    <string name="ANIMATIONS_LABEL">Animations:</string>
+    <string name="ANIMATIONS_LABEL">Animation:</string>
+    <string name="LEDS_LABEL">Leds:</string>
+    <string name="SECONDS_LABEL">Seconds:</string>
+    <string name="SET">Set</string>
+    <string name="CHOOSE">Choose</string>
+    <string name="CANCEL">Cancel</string>
+    <string name="COLOR">Color</string>
+    <string name="RESET">Reset</string>
 </resources>
