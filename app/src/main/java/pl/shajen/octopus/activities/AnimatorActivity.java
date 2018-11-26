@@ -1,5 +1,6 @@
 package pl.shajen.octopus.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
@@ -14,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -133,7 +135,7 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         for (final String response : responses) {
             try {
                 processData(new JSONObject(response));
-            } catch (Exception ex) {
+            } catch (JSONException ex) {
                 isError |= true;
             }
         }
@@ -149,19 +151,24 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         final NumberPicker ledsNumberPicker = findViewById(R.id.ledsNumberPicker);
         final NumberPicker speedNumberPicker = findViewById(R.id.speedNumberPicker);
         final NumberPicker animationsNumberPicker = findViewById(R.id.animationsNumberPicker);
+        final Switch useColorSwitch = findViewById(R.id.useColorSwitch);
+        final Button button = findViewById(R.id.colorButton);
+        final String color = String.format("%06X", 0xFFFFFF & button.getCurrentTextColor());
 
         data.add(new Pair<>("SECONDS_PER_ANIMATION", String.valueOf(secondsNumberPicker.getValue())));
         data.add(new Pair<>("LEDS", String.valueOf(ledsNumberPicker.getValue())));
         data.add(new Pair<>("SPEED", String.valueOf(speedNumberPicker.getValue())));
-        data.add(new Pair<>("ANIMATIONS", String.valueOf(animationsNumberPicker.getValue())));
+        data.add(new Pair<>("ANIMATION", String.valueOf(animationsNumberPicker.getValue() - 1)));
+        data.add(new Pair<>("USE_COLOR", useColorSwitch.isChecked() ? "1" : "0"));
+        data.add(new Pair<>("COLOR", color));
 
         sendTask(device, data);
     }
 
     private void selectColor() {
         final View view = findViewById(android.R.id.content);
-        final Button button = findViewById(R.id.colorButton);
-        final int color = button.getCurrentTextColor();
+        final Button colorButton = findViewById(R.id.colorButton);
+        final int color = colorButton.getCurrentTextColor();
 
         new ColorPickerPopup.Builder(this)
                 .initialColor(color)
@@ -175,8 +182,8 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
                 .show(view, new ColorPickerPopup.ColorPickerObserver() {
                     @Override
                     public void onColorPicked(int color) {
-                        button.setBackgroundColor(color);
-                        button.setTextColor(color);
+                        colorButton.setBackgroundColor(color);
+                        colorButton.setTextColor(color);
                     }
 
                     @Override
@@ -193,13 +200,19 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
             final NumberPicker ledsNumberPicker = findViewById(R.id.ledsNumberPicker);
             final NumberPicker speedNumberPicker = findViewById(R.id.speedNumberPicker);
             final NumberPicker animationsNumberPicker = findViewById(R.id.animationsNumberPicker);
+            final Switch useColorSwitch = findViewById(R.id.useColorSwitch);
+            final Button colorButton = findViewById(R.id.colorButton);
+            final int color = Color.parseColor("#" + data.getString("color"));
 
             powerSwitch.setChecked(data.getString("powered_on").equals("1"));
             secondsNumberPicker.setValue(Integer.parseInt(data.getString("seconds_per_animation")));
             ledsNumberPicker.setValue(Integer.parseInt(data.getString("leds")));
             speedNumberPicker.setValue(Integer.parseInt(data.getString("speed")));
             animationsNumberPicker.setValue(Integer.parseInt(data.getString("animation")) + 1);
-        } catch (Exception ex) {
+            useColorSwitch.setChecked(data.getString("use_color").equals("1"));
+            colorButton.setBackgroundColor(color);
+            colorButton.setTextColor(color);
+        } catch (JSONException ex) {
         }
     }
 
