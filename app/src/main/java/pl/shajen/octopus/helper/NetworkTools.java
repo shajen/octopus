@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.support.test.espresso.core.deps.guava.base.Charsets;
 import android.support.test.espresso.core.deps.guava.io.CharStreams;
 import android.text.format.Formatter;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -117,7 +118,8 @@ public class NetworkTools {
             urlConnection.setReadTimeout(NetworkConstant.TIMEOUT_COMMAND_MS);
             return CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(), Charsets.UTF_8));
         } catch (Exception ex) {
-            return null;
+            Log.d("NetworkTools", ex.toString());
+            return "";
         }
     }
 

@@ -3,6 +3,7 @@ package pl.shajen.octopus.activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -115,18 +116,18 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
     }
 
     private void sendTask(Device device, String key, String value) {
-        List<Pair<String, String>> tasks = new LinkedList<>();
-        tasks.add(new Pair<>(key, value));
-        sendTask(device, tasks);
+        final List<String> keys = new LinkedList<>();
+        final List<String> values = new LinkedList<>();
+        keys.add(key);
+        values.add(value);
+        sendTask(device, keys, values);
     }
 
-    private void sendTask(Device device, List<Pair<String, String>> data) {
-        final List<String> tasks = new LinkedList<>();
-        for (Pair<String, String> d : data) {
-            final String url = String.format("/ANIMATOR/SET?KEY=%s&VALUE=%s", d.first, d.second);
-            tasks.add(url);
-        }
-        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute(tasks.toArray(new String[tasks.size()]));
+    private void sendTask(Device device, List<String> keys, List<String> values) {
+        final String keysString = TextUtils.join(",", keys);
+        final String valuesString = TextUtils.join(",", values);
+        final String url = String.format("/ANIMATOR/SET?KEY=%s&VALUE=%s", keysString, valuesString);
+        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute(url);
     }
 
     @Override
@@ -145,7 +146,8 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
     }
 
     private void setData(Device device) {
-        final List<Pair<String, String>> data = new LinkedList<>();
+        final List<String> keys = new LinkedList<>();
+        final List<String> values = new LinkedList<>();
 
         final NumberPicker secondsNumberPicker = findViewById(R.id.secondsNumberPicker);
         final NumberPicker ledsNumberPicker = findViewById(R.id.ledsNumberPicker);
@@ -155,14 +157,20 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         final Button button = findViewById(R.id.colorButton);
         final String color = String.format("%06X", 0xFFFFFF & button.getCurrentTextColor());
 
-        data.add(new Pair<>("SECONDS_PER_ANIMATION", String.valueOf(secondsNumberPicker.getValue())));
-        data.add(new Pair<>("LEDS", String.valueOf(ledsNumberPicker.getValue())));
-        data.add(new Pair<>("SPEED", String.valueOf(speedNumberPicker.getValue())));
-        data.add(new Pair<>("ANIMATION", String.valueOf(animationsNumberPicker.getValue() - 1)));
-        data.add(new Pair<>("USE_COLOR", useColorSwitch.isChecked() ? "1" : "0"));
-        data.add(new Pair<>("COLOR", color));
+        keys.add("SECONDS_PER_ANIMATION");
+        values.add(String.valueOf(secondsNumberPicker.getValue()));
+        keys.add("LEDS");
+        values.add(String.valueOf(ledsNumberPicker.getValue()));
+        keys.add("SPEED");
+        values.add(String.valueOf(speedNumberPicker.getValue()));
+        keys.add("ANIMATION");
+        values.add(String.valueOf(animationsNumberPicker.getValue() - 1));
+        keys.add("USE_COLOR");
+        values.add(useColorSwitch.isChecked() ? "1" : "0");
+        keys.add("COLOR");
+        values.add(color);
 
-        sendTask(device, data);
+        sendTask(device, keys, values);
     }
 
     private void selectColor() {
