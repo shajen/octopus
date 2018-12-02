@@ -23,4 +23,5 @@
     <string name="CANCEL">Anuluj</string>
     <string name="COLOR">Kolor</string>
     <string name="RESET">Zresetuj</string>
+    <string name="CLEAR">Wyczyść</string>
 </resources>

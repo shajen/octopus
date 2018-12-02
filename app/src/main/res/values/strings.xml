@@ -24,4 +24,5 @@
     <string name="CANCEL">Cancel</string>
     <string name="COLOR">Color</string>
     <string name="RESET">Reset</string>
+    <string name="CLEAR">Clear</string>
 </resources>

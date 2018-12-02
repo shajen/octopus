@@ -33,12 +33,7 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_devices);
-
-        Set<Device> devices = new HashSet<>();
-        for (String packedDevice : getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_PREFS_KEY, new HashSet<String>())) {
-            devices.add(new Device(packedDevice));
-        }
-        setDevices(devices);
+        setDevices(readDevices());
     }
 
     @Override
@@ -55,12 +50,36 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
                 NetworkTools networkTools = new NetworkTools(this);
                 new ScanTask(this, this, networkTools).execute();
                 return true;
+            case R.id.clear:
+                final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
+                editor.remove(DEVICES_PREFS_KEY);
+                editor.commit();
+                setDevices(readDevices());
+                return true;
             case R.id.close:
                 finishAffinity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private Set<Device> readDevices() {
+        Set<Device> devices = new HashSet<>();
+        for (String packedDevice : getSharedPreferences(PREFS_NAME, 0).getStringSet(DEVICES_PREFS_KEY, new HashSet<String>())) {
+            devices.add(new Device(packedDevice));
+        }
+        return devices;
+    }
+
+    private void writeDevices(Set<Device> devices) {
+        Set<String> packedDevices = new HashSet<>();
+        for (Device device : devices) {
+            packedDevices.add(device.toPackedString());
+        }
+        final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
+        editor.putStringSet(DEVICES_PREFS_KEY, packedDevices);
+        editor.commit();
     }
 
     private void setDevices(Set<Device> devices) {
@@ -93,13 +112,18 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
 
     @Override
     public void processFinish(Set<Device> devices) {
-        Set<String> packedDevices = new HashSet<>();
-        for (Device device : devices) {
-            packedDevices.add(device.toPackedString());
+        for (final Device oldDevice : readDevices()) {
+            boolean alreadyAdded = false;
+            for (final Device newDevice : devices) {
+                if (oldDevice.ip().equals(newDevice.ip())) {
+                    alreadyAdded = true;
+                }
+            }
+            if (!alreadyAdded) {
+                devices.add(oldDevice);
+            }
         }
-        final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
-        editor.putStringSet(DEVICES_PREFS_KEY, packedDevices);
-        editor.commit();
+        writeDevices(devices);
         setDevices(devices);
     }
 }
