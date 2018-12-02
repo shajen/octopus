@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,11 +53,7 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         switch (item.getItemId()) {
             case R.id.update:
                 NetworkTools networkTools = new NetworkTools(this);
-                if (!networkTools.isInternet()) {
-                    Toast.makeText(this, getString(R.string.NO_INTERNET_CONNECTION), Toast.LENGTH_LONG).show();
-                } else {
-                    new ScanTask(this, this, networkTools).execute();
-                }
+                new ScanTask(this, this, networkTools).execute();
                 return true;
             case R.id.close:
                 finishAffinity();
@@ -75,10 +70,6 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         List<Device> list = new ArrayList<>();
         list.addAll(devices);
         Collections.sort(list);
-        List<String> ipList = new ArrayList<>();
-        for (Device device : list) {
-            ipList.add(device.toString());
-        }
         final ArrayAdapter<Device> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

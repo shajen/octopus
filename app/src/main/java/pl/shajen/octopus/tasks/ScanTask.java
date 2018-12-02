@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +18,6 @@ import pl.shajen.octopus.constants.NetworkConstant;
 import pl.shajen.octopus.helper.NetworkTools;
 import pl.shajen.octopus.models.Device;
 
-import static pl.shajen.octopus.constants.NetworkConstant.IP_LIST_URL;
 import static pl.shajen.octopus.constants.NetworkConstant.MAX_HOST;
 import static pl.shajen.octopus.constants.NetworkConstant.PORT;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_CONNECT_MS;
@@ -95,13 +93,10 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<Device>> {
 
     private List<String> getActiveDevices() {
         List<String> devices = new LinkedList<>();
-        final List<String> devicesInternet = getDevicesInternet();
         final List<String> devicesWifi = getDevicesWifi();
-        final int maxHostInternet = devicesInternet.size();
         final int maxHostWifi = devicesWifi.size();
-        m_progressDialog.setMax(maxHostInternet + maxHostWifi);
-        devices.addAll(getActiveDevices(0, devicesInternet));
-        devices.addAll(getActiveDevices(maxHostInternet, devicesWifi));
+        m_progressDialog.setMax(maxHostWifi);
+        devices.addAll(getActiveDevices(0, devicesWifi));
         return devices;
     }
 
@@ -115,21 +110,6 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<Device>> {
             publishProgress(progressStart + i++);
         }
         return devices;
-    }
-
-    private List<String> getDevicesInternet() {
-        final JSONObject json = m_networkTools.getJsonResponse(IP_LIST_URL);
-        List<String> list = new ArrayList<>();
-        if (json != null) {
-            try {
-                final JSONArray array = json.getJSONArray("ip_list");
-                for (int i = 0; i < array.length(); ++i) {
-                    list.add(array.getString(i));
-                }
-            } catch (Exception ex) {
-            }
-        }
-        return list;
     }
 
     private List<String> getDevicesWifi() {

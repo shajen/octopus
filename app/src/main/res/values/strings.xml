@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Octopus</string>
     <string name="SEARCHING_DEVICES">Searching devices ...</string>
-    <string name="NO_INTERNET_CONNECTION">No internet connection.</string>
     <string name="FOUND_DEVICES">Found devices (%1d)</string>
     <string name="TASK_ERROR">Error during connection.</string>
     <string name="UPDATE">Search</string>

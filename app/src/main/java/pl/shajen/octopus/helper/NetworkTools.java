@@ -19,9 +19,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
 
 import pl.shajen.octopus.constants.NetworkConstant;
 
@@ -37,10 +40,19 @@ public class NetworkTools {
         m_context = context;
     }
 
-    public boolean isInternet() {
-        ConnectivityManager cm = (ConnectivityManager) m_context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        return (ni != null);
+    public boolean isVpn() {
+        try {
+            for (NetworkInterface intf : Collections.list(NetworkInterface.getNetworkInterfaces())) {
+                if (!intf.isLoopback() && intf.isPointToPoint() && intf.isUp())
+                    for (InetAddress inetAddress : Collections.list(intf.getInetAddresses())) {
+                        if (inetAddress.isSiteLocalAddress()) {
+                            return true;
+                        }
+                    }
+            }
+        } catch (SocketException ex) {
+        }
+        return false;
     }
 
     public boolean isWifi() {
@@ -128,6 +140,6 @@ public class NetworkTools {
     }
 
     public boolean isIpInsideNetwork(String ip) {
-        return (isLocalIp(ip) && isWifi()) || (!isLocalIp(ip) && isInternet());
+        return (isLocalIp(ip) && (isWifi() || isVpn()));
     }
 }
