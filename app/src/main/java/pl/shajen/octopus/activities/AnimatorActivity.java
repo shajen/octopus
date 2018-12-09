@@ -44,7 +44,7 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
 
             final NumberPicker ledsNumberPicker = findViewById(R.id.ledsNumberPicker);
             ledsNumberPicker.setMinValue(1);
-            ledsNumberPicker.setMaxValue(200);
+            ledsNumberPicker.setMaxValue(360);
 
             final NumberPicker speedNumberPicker = findViewById(R.id.speedNumberPicker);
             speedNumberPicker.setMinValue(1);
