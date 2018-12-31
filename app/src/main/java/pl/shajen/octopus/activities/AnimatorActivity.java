@@ -111,7 +111,7 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
     }
 
     private void refresh(Device device) {
-        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute("/ANIMATOR/");
+        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip()).execute("/ANIMATOR/");
     }
 
     private void sendTask(Device device, String key, String value) {
@@ -126,7 +126,7 @@ public class AnimatorActivity extends AppCompatActivity implements DeviceRequest
         final String keysString = TextUtils.join(",", keys);
         final String valuesString = TextUtils.join(",", values);
         final String url = String.format("/ANIMATOR/SET?KEY=%s&VALUE=%s", keysString, valuesString);
-        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip(), true).execute(url);
+        new DeviceRequestTask(this, this, new NetworkTools(this), device.ip()).execute(url);
     }
 
     @Override

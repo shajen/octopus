@@ -99,6 +99,8 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
                 final Intent in;
                 if (item.controller().equals("Animator")) {
                     in = new Intent(getApplicationContext(), AnimatorActivity.class);
+                } else if (item.controller().equals("Sonoff")) {
+                    in = new Intent(getApplicationContext(), RemoteSocketActivity.class);
                 } else {
                     in = new Intent(getApplicationContext(), RemoteSocketActivity.class);
                 }

@@ -102,6 +102,8 @@ public class NetworkTools {
             socket.close();
             return result;
         } catch (Exception ex) {
+            Log.e("exception", "getRawSocketResponse");
+            Log.e("exception", ex.toString());
             return "";
         }
     }
@@ -114,11 +116,16 @@ public class NetworkTools {
         try {
             return new JSONObject(getStringResponse(stringUrl));
         } catch (Exception ex) {
+            Log.e("exception", "getJsonResponse");
+            Log.e("exception", ex.toString());
             return null;
         }
     }
 
     public String getStringResponse(String ip, String resource, int port) {
+        if (!resource.startsWith("/")) {
+            resource = "/" + resource;
+        }
         return getStringResponse("http://" + ip + ":" + port + resource);
     }
 
@@ -130,7 +137,8 @@ public class NetworkTools {
             urlConnection.setReadTimeout(NetworkConstant.TIMEOUT_COMMAND_MS);
             return CharStreams.toString(new InputStreamReader(urlConnection.getInputStream(), Charsets.UTF_8));
         } catch (Exception ex) {
-            Log.d("NetworkTools", ex.toString());
+            Log.e("exception", "getStringResponse");
+            Log.e("exception", ex.toString());
             return "";
         }
     }

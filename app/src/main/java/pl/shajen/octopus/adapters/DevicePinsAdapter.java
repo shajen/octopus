@@ -55,7 +55,7 @@ public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
             @Override
             public void onClick(View v) {
                 Log.e("ON", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip, false).execute(String.format("GPIO/SET?PIN=%d&MODE=ON", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO/SET?PIN=%d&MODE=ON", pin));
             }
         });
 
@@ -72,7 +72,7 @@ public class DevicePinsAdapter extends ArrayAdapter<Pair<Integer, Boolean>> {
             @Override
             public void onClick(View v) {
                 Log.e("OFF", String.format("%d", pin));
-                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip, false).execute(String.format("GPIO/SET?PIN=%d&MODE=OFF", pin));
+                new DeviceRequestTask(m_context, m_requestResponse, new NetworkTools(m_context), m_ip).execute(String.format("GPIO/SET?PIN=%d&MODE=OFF", pin));
             }
         });
 
