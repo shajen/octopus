@@ -36,7 +36,11 @@ public class RemoteSocketActivity extends AppCompatActivity implements DeviceReq
         Bundle b = getIntent().getExtras();
         if (b != null) {
             final Device device = new Device(b.getString(DEVICE_ACTIVITY_KEY));
-            new DeviceRequestTask(this, this, new NetworkTools(this), device.ip()).execute("GPIO/");
+
+            final TextView deviceTeypeTextView = findViewById(R.id.deviceTeypeTextView);
+            deviceTeypeTextView.setText(device.toString());
+
+            new DeviceRequestTask(this, this, new NetworkTools(this), device.ip()).execute("/GPIO/");
         }
     }
 

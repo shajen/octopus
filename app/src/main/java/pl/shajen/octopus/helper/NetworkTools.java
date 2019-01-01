@@ -12,8 +12,6 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -28,9 +26,6 @@ import java.util.Collections;
 
 import pl.shajen.octopus.constants.NetworkConstant;
 
-import static pl.shajen.octopus.constants.NetworkConstant.PORT;
-import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_COMMAND_MS;
-import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_CONNECT_MS;
 import static pl.shajen.octopus.constants.NetworkConstant.TIMEOUT_PING_MS;
 
 public class NetworkTools {
@@ -87,27 +82,6 @@ public class NetworkTools {
         }
     }
 
-    public String getRawSocketResponse(String ip, String url) {
-        try {
-            Socket socket = new Socket();
-            socket.setSoTimeout(TIMEOUT_COMMAND_MS);
-            socket.connect(new InetSocketAddress(ip, PORT), TIMEOUT_CONNECT_MS);
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            out.writeUTF(String.format("GET /%s HTTP", url));
-            out.flush();
-            InputStream in = new BufferedInputStream(socket.getInputStream());
-            final String result = CharStreams.toString(new InputStreamReader(in, Charsets.UTF_8));
-            in.close();
-            out.close();
-            socket.close();
-            return result;
-        } catch (Exception ex) {
-            Log.e("exception", "getRawSocketResponse");
-            Log.e("exception", ex.toString());
-            return "";
-        }
-    }
-
     public JSONObject getJsonResponse(String ip, String resource, int port) {
         return getJsonResponse("http://" + ip + ":" + port + resource);
     }
@@ -123,9 +97,6 @@ public class NetworkTools {
     }
 
     public String getStringResponse(String ip, String resource, int port) {
-        if (!resource.startsWith("/")) {
-            resource = "/" + resource;
-        }
         return getStringResponse("http://" + ip + ":" + port + resource);
     }
 

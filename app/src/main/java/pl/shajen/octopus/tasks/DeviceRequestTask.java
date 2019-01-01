@@ -39,12 +39,7 @@ public class DeviceRequestTask extends AsyncTask<String, Void, List<String>> {
         List<String> response = new LinkedList<>();
         if (m_networkTools.isIpInsideNetwork(m_deviceIp)) {
             for (final String url : strings) {
-                final String httpResponse = m_networkTools.getStringResponse(m_deviceIp, url, NetworkConstant.PORT);
-                if (httpResponse.isEmpty()) {
-                    response.add(m_networkTools.getRawSocketResponse(m_deviceIp, url));
-                } else {
-                    response.add(httpResponse);
-                }
+                response.add(m_networkTools.getStringResponse(m_deviceIp, url, NetworkConstant.PORT));
             }
         }
         return response;
