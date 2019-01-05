@@ -75,7 +75,6 @@ public class ScanTask extends AsyncTask<Void, Integer, Set<Device>> {
         m_progressDialog.setProgress(0);
         int i = 0;
         for (final String deviceIp : list) {
-            m_progressDialog.setMessage(m_context.getString(R.string.SCANNING_IP, deviceIp));
             final JSONObject json = m_networkTools.getJsonResponse(deviceIp, "/", NetworkConstant.PORT);
             if (json != null) {
                 try {
