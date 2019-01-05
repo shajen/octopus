@@ -56,6 +56,9 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
                 editor.commit();
                 setDevices(readDevices());
                 return true;
+            case R.id.about:
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
             case R.id.close:
                 finishAffinity();
                 return true;

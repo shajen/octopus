@@ -24,4 +24,12 @@
     <string name="COLOR">Kolor</string>
     <string name="RESET">Zresetuj</string>
     <string name="CLEAR">Wyczyść</string>
+    <string name="ABOUT">O aplikacji</string>
+    <string name="INFO">Aplikacja służy do zdalnego kontrolowania urządzeń opartych o oprogramowanie dostępne na stronie <a href="https://github.com/shajen/micropython_esp8266">https://github.com/shajen/micropython_esp8266</a>.</string>
+    <string name="CONTACT_TITLE">Kontakt</string>
+    <string name="CONTACT">Jeśli chcesz zgłosić uwagi, problemy lub propozycje zmian, skontaktuj się ze mną poprzez e-mail\n<a href="mailto:shajen@shajen.pl">shajen@shajen.pl</a></string>
+    <string name="DONATE_TITLE">Wsparcie</string>
+    <string name="DONATE">Jeśli chcesz przekazać darowiznę na rozwój aplikacji, możesz to zrobić poprzez system PayPal, wpłacając darowiznę na adres\n<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=shajen@shajen.pl&amp;lc=US&amp;item_name=Donate+Octopus&amp;no_note=0&amp;cn=&amp;curency_code=USD">shajen@shajen.pl</a></string>
+    <string name="AUTHOR_TITLE">Licencja</string>
+    <string name="AUTHOR">Aplikacja jest oparta na licencji GPL v3. Źródła aplikacji dostępne są na <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
 </resources>
