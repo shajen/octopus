@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +49,11 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
         switch (item.getItemId()) {
             case R.id.update:
                 NetworkTools networkTools = new NetworkTools(this);
-                new ScanTask(this, this, networkTools).execute();
+                if (networkTools.isAnyInterfaceAvailable()) {
+                    new ScanTask(this, this, networkTools).execute();
+                } else {
+                    Toast.makeText(this, getText(R.string.NOT_FOUND_ANY_INTERFACE), Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.clear:
                 final SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
@@ -98,6 +103,11 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
+                NetworkTools networkTools = new NetworkTools(getApplicationContext());
+                if (!networkTools.isAnyInterfaceAvailable()) {
+                    Toast.makeText(getApplicationContext(), getText(R.string.NOT_FOUND_ANY_INTERFACE), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final Device item = (Device) parent.getItemAtPosition(position);
                 if (item.controller().equals("Animator")) {
                     startActivity(AnimatorActivity.class, item);

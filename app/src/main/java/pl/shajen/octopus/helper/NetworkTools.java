@@ -35,7 +35,11 @@ public class NetworkTools {
         m_context = context;
     }
 
-    public boolean isVpn() {
+    public boolean isAnyInterfaceAvailable() {
+        return isWifi() || isVpn();
+    }
+
+    private boolean isVpn() {
         try {
             for (NetworkInterface intf : Collections.list(NetworkInterface.getNetworkInterfaces())) {
                 if (!intf.isLoopback() && intf.isPointToPoint() && intf.isUp())

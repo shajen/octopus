@@ -29,4 +29,5 @@
     <string name="CONTACT">Jeśli chcesz zgłosić uwagi, problemy lub propozycje zmian, skontaktuj się ze mną poprzez e-mail\n<a href="mailto:shajen@shajen.pl">shajen@shajen.pl</a></string>
     <string name="AUTHOR_TITLE">Licencja</string>
     <string name="AUTHOR">Aplikacja jest oparta na licencji GPL v3. Źródła aplikacji dostępne są na <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
+    <string name="NOT_FOUND_ANY_INTERFACE">Brak połączenia WiFi lub VPN. Sprawdź połączenie sieciowe.</string>
 </resources>
