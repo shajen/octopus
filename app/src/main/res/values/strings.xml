@@ -12,7 +12,6 @@
     <string name="OFF">Off</string>
     <string name="PLEASE_WAIT">Please wait ...</string>
     <string name="TASK">Submitting</string>
-    <string name="SCANNING_IP">Scanning %1s ...</string>
     <string name="DEVICE_TYPE_LABEL">Device type:</string>
     <string name="STATE_LABEL">State:</string>
     <string name="SPEED_LABEL">Speed:</string>
@@ -29,8 +28,6 @@
     <string name="INFO">The application is used for remote control of devices based on software available on the website <a href="https://github.com/shajen/micropython_esp8266">https://github.com/shajen/micropython_esp8266</a>.</string>
     <string name="CONTACT_TITLE">Contact</string>
     <string name="CONTACT">If you want to report comments, problems or suggestions for changes, please contact me via e-mail\n<a href="mailto:shajen@shajen.pl">shajen@shajen.pl</a></string>
-    <string name="DONATE_TITLE">Donate</string>
-    <string name="DONATE">If you want to donate for development, you can do it through PayPal by making a donation to the address\n<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=shajen@shajen.pl&amp;lc=US&amp;item_name=Donate+Octopus&amp;no_note=0&amp;cn=&amp;curency_code=USD">shajen@shajen.pl</a></string>
     <string name="AUTHOR_TITLE">License</string>
     <string name="AUTHOR">The application is based on the GPL v3 license. Sources can be found on the page <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
 </resources>

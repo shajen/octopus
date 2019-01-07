@@ -26,9 +26,6 @@ public class AboutActivity extends AppCompatActivity {
         final TextView textViewContact = (TextView) findViewById(R.id.textViewContact);
         textViewContact.setMovementMethod(LinkMovementMethod.getInstance());
 
-        final TextView textViewDonate = (TextView) findViewById(R.id.textViewDonate);
-        textViewDonate.setMovementMethod(LinkMovementMethod.getInstance());
-
         final TextView textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
         textViewAuthor.setMovementMethod(LinkMovementMethod.getInstance());
     }
