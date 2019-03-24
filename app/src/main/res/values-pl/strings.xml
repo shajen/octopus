@@ -30,4 +30,10 @@
     <string name="AUTHOR_TITLE">Licencja</string>
     <string name="AUTHOR">Aplikacja jest oparta na licencji GPL v3. Źródła aplikacji dostępne są na <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
     <string name="NOT_FOUND_ANY_INTERFACE">Brak połączenia WiFi lub VPN. Sprawdź połączenie sieciowe.</string>
+    <string name="THERMOSTAT_MODE">Tryb pracy:</string>
+    <string name="HYSTERESIS">Histereza:</string>
+    <string name="DESIRED_TEMPERATURE">Oczekiwana temperatura:</string>
+    <string name="CURRENT_TEMPERATURE">Aktualna temperatura:</string>
+    <string name="HEATER">Grzanie</string>
+    <string name="COOLER">Chłodzenie</string>
 </resources>

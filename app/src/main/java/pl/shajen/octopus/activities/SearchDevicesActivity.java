@@ -115,6 +115,8 @@ public class SearchDevicesActivity extends AppCompatActivity implements ScanTask
                     startActivity(RemoteSocketActivity.class, item);
                 } else if (item.controller().equals("Remote Socket")) {
                     startActivity(RemoteSocketActivity.class, item);
+                } else if (item.controller().equals("Thermostat")) {
+                    startActivity(ThermostatActivity.class, item);
                 }
             }
         });
