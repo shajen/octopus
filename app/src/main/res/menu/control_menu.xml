@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/update"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/UPDATE" />
+        android:id="@+id/menu_refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="@string/REFRESH" />
     <item
-        android:id="@+id/clear"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="@string/CLEAR" />
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/SETTINGS" />
     <item
         android:id="@+id/about"
         android:icon="@android:drawable/ic_menu_info_details"

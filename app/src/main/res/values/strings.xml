@@ -1,40 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Octopus</string>
-    <string name="SEARCHING_DEVICES">Searching devices ...</string>
-    <string name="FOUND_DEVICES">Found devices (%1d)</string>
-    <string name="TASK_ERROR">Error during connection.</string>
-    <string name="UPDATE">Search</string>
+    <string name="APP_NAME">Octopus</string>
+    <string name="REFRESH">Refresh</string>
     <string name="CLOSE">Exit</string>
-    <string name="FOUND_PINS">Founded relays (%1d)</string>
-    <string name="PIN_LABEL">Relay #%d</string>
-    <string name="ON">On</string>
-    <string name="OFF">Off</string>
-    <string name="PLEASE_WAIT">Please wait ...</string>
-    <string name="TASK">Submitting</string>
-    <string name="DEVICE_TYPE_LABEL">Device type:</string>
-    <string name="STATE_LABEL">State:</string>
-    <string name="SPEED_LABEL">Speed:</string>
-    <string name="ANIMATIONS_LABEL">Animation:</string>
-    <string name="LEDS_LABEL">Leds:</string>
-    <string name="SECONDS_LABEL">Seconds:</string>
-    <string name="SET">Set</string>
-    <string name="CHOOSE">Choose</string>
-    <string name="CANCEL">Cancel</string>
-    <string name="COLOR">Color</string>
-    <string name="RESET">Reset</string>
-    <string name="CLEAR">Clear</string>
+    <string name="SETTINGS">Settings</string>
     <string name="ABOUT">About</string>
-    <string name="INFO">The application is used for remote control of devices based on software available on the website <a href="https://github.com/shajen/micropython_esp8266">https://github.com/shajen/micropython_esp8266</a>.</string>
-    <string name="CONTACT_TITLE">Contact</string>
-    <string name="CONTACT">If you want to report comments, problems or suggestions for changes, please contact me via e-mail\n<a href="mailto:shajen@shajen.pl">shajen@shajen.pl</a></string>
-    <string name="AUTHOR_TITLE">License</string>
-    <string name="AUTHOR">The application is based on the GPL v3 license. Sources can be found on the page <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
-    <string name="NOT_FOUND_ANY_INTERFACE">No WiFi or VPN connection. Please check your network connection.</string>
-    <string name="THERMOSTAT_MODE">Working mode:</string>
-    <string name="HYSTERESIS">Hystereis:</string>
-    <string name="DESIRED_TEMPERATURE">Desired temperature:</string>
-    <string name="CURRENT_TEMPERATURE">Current temperature:</string>
-    <string name="HEATER">Heater</string>
-    <string name="COOLER">Cooler</string>
 </resources>

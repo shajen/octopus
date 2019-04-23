@@ -1,39 +1,7 @@
 <resources>
-    <string name="app_name">Ośmiornica</string>
-    <string name="SEARCHING_DEVICES">Wyszukiwanie urządzeń ...</string>
-    <string name="FOUND_DEVICES">Znalezione urządzenia (%1d)</string>
-    <string name="TASK_ERROR">Błąd podczas połączenia.</string>
-    <string name="UPDATE">Szukaj</string>
-    <string name="CLOSE">Zamknij</string>
-    <string name="FOUND_PINS">Znalezione przekaźniki (%1d)</string>
-    <string name="PIN_LABEL">Przekaźnik #%d</string>
-    <string name="ON">Włącz</string>
-    <string name="OFF">Wyłącz</string>
-    <string name="TASK">Wysyłanie</string>
-    <string name="PLEASE_WAIT">Proszę czekać ...</string>
-    <string name="DEVICE_TYPE_LABEL">Typ urządzenia:</string>
-    <string name="STATE_LABEL">Stan:</string>
-    <string name="SPEED_LABEL">Prędkość:</string>
-    <string name="ANIMATIONS_LABEL">Animacja:</string>
-    <string name="LEDS_LABEL">Ledy:</string>
-    <string name="SECONDS_LABEL">Sekundy:</string>
-    <string name="SET">Ustaw</string>
-    <string name="CHOOSE">Wybierz</string>
-    <string name="CANCEL">Anuluj</string>
-    <string name="COLOR">Kolor</string>
-    <string name="RESET">Zresetuj</string>
-    <string name="CLEAR">Wyczyść</string>
-    <string name="ABOUT">O aplikacji</string>
-    <string name="INFO">Aplikacja służy do zdalnego kontrolowania urządzeń opartych o oprogramowanie dostępne na stronie <a href="https://github.com/shajen/micropython_esp8266">https://github.com/shajen/micropython_esp8266</a>.</string>
-    <string name="CONTACT_TITLE">Kontakt</string>
-    <string name="CONTACT">Jeśli chcesz zgłosić uwagi, problemy lub propozycje zmian, skontaktuj się ze mną poprzez e-mail\n<a href="mailto:shajen@shajen.pl">shajen@shajen.pl</a></string>
-    <string name="AUTHOR_TITLE">Licencja</string>
-    <string name="AUTHOR">Aplikacja jest oparta na licencji GPL v3. Źródła aplikacji dostępne są na <a href="https://github.com/shajen/octopus">https://github.com/shajen/octopus</a>.</string>
-    <string name="NOT_FOUND_ANY_INTERFACE">Brak połączenia WiFi lub VPN. Sprawdź połączenie sieciowe.</string>
-    <string name="THERMOSTAT_MODE">Tryb pracy:</string>
-    <string name="HYSTERESIS">Histereza:</string>
-    <string name="DESIRED_TEMPERATURE">Oczekiwana temperatura:</string>
-    <string name="CURRENT_TEMPERATURE">Aktualna temperatura:</string>
-    <string name="HEATER">Grzanie</string>
-    <string name="COOLER">Chłodzenie</string>
+    <string name="APP_NAME">Ośmiornica</string>
+    <string name="REFRESH">Odśwież</string>
+    <string name="CLOSE">Wyjście</string>
+    <string name="SETTINGS">Ustawienia</string>
+    <string name="ABOUT">O programie</string>
 </resources>
