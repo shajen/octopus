@@ -12,8 +12,6 @@ import org.eclipse.paho.client.mqttv3.MqttCallbackExtended;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ControlService extends IntentService {
     final String TAG = "ControlService";
@@ -37,6 +35,7 @@ public class ControlService extends IntentService {
         mqttConnectOptions.setUserName(username);
         mqttConnectOptions.setPassword(password.toCharArray());
 
+        final MessageParser messageParser = new MessageParser(this);
         final MqttAndroidClient mqttClient = new MqttAndroidClient(getApplicationContext(), host, "octopus");
         mqttClient.setCallback(new MqttCallbackExtended() {
             @Override
@@ -54,7 +53,7 @@ public class ControlService extends IntentService {
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                onMessageHandler(topic, new String(mqttMessage.getPayload()));
+                messageParser.onMessageHandler(topic, new String(mqttMessage.getPayload()));
             }
 
             @Override
@@ -75,18 +74,6 @@ public class ControlService extends IntentService {
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-        }
-    }
-
-    private void onMessageHandler(String topic, String message) {
-        Log.d(TAG, "new message");
-        Log.d(TAG, topic);
-        Log.d(TAG, message);
-        try {
-            JSONObject jsonMessage = new JSONObject(message);
-        } catch (JSONException e) {
-            Log.w(TAG, "exception during JSON parse message");
-            Log.w(TAG, e.toString());
         }
     }
 

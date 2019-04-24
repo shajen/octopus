@@ -18,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag("control_fragment");
+        Fragment fragment = fm.findFragmentByTag(Constants.CONTROL_AGGREGATOR_FRAGMENT);
         if (fragment == null) {
             FragmentTransaction ft = fm.beginTransaction();
             fragment = new ControlAggregatorFragment();
-            ft.add(android.R.id.content, fragment, "control_fragment");
+            ft.add(android.R.id.content, fragment, Constants.CONTROL_AGGREGATOR_FRAGMENT);
             ft.commit();
         }
 
