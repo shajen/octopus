@@ -1,5 +1,6 @@
 package pl.shajen.octopus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,22 +10,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import pl.shajen.octopus.control.ControlAggregatorFragment;
+import pl.shajen.octopus.control.ControlService;
 
 public class MainActivity extends AppCompatActivity {
-    Fragment m_fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         FragmentManager fm = getSupportFragmentManager();
-        m_fragment = fm.findFragmentByTag("control_fragment");
-        if (m_fragment == null) {
+        Fragment fragment = fm.findFragmentByTag("control_fragment");
+        if (fragment == null) {
             FragmentTransaction ft = fm.beginTransaction();
-            m_fragment = new ControlAggregatorFragment();
-            ft.add(android.R.id.content, m_fragment, "control_fragment");
+            fragment = new ControlAggregatorFragment();
+            ft.add(android.R.id.content, fragment, "control_fragment");
             ft.commit();
         }
+
+        Intent intent = new Intent(this, ControlService.class);
+        intent.putExtra("host", "tcp://mqtt.shajen.pl:3380");
+        intent.putExtra("username", "test");
+        intent.putExtra("password", "azerty123");
+        startService(intent);
     }
 
     @Override
