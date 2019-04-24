@@ -7,4 +7,8 @@ public class Constants {
     public static final String MESSAGE = "message";
 
     public static final String CONTROL_AGGREGATOR_FRAGMENT = "ControlAggregatorFragment";
+
+    public static final String HOST = "host";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
 }

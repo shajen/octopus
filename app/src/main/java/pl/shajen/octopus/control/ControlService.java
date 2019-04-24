@@ -13,6 +13,8 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import pl.shajen.octopus.Constants;
+
 public class ControlService extends IntentService {
     final String TAG = "ControlService";
 
@@ -25,9 +27,9 @@ public class ControlService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent");
 
-        final String host = intent.getStringExtra("host");
-        final String username = intent.getStringExtra("username");
-        final String password = intent.getStringExtra("password");
+        final String host = intent.getStringExtra(Constants.HOST);
+        final String username = intent.getStringExtra(Constants.USERNAME);
+        final String password = intent.getStringExtra(Constants.PASSWORD);
 
         final MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
         mqttConnectOptions.setCleanSession(true);

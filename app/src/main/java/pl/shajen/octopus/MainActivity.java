@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, ControlService.class);
-        intent.putExtra("host", "tcp://mqtt.shajen.pl:3380");
-        intent.putExtra("username", "test");
-        intent.putExtra("password", "azerty123");
+        intent.putExtra(Constants.HOST, "tcp://mqtt.shajen.pl:3380");
+        intent.putExtra(Constants.USERNAME, "test");
+        intent.putExtra(Constants.PASSWORD, "azerty123");
         startService(intent);
     }
 
